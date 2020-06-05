@@ -65,15 +65,3 @@ def delete_food(_id):
             return Response(None, 200)
     except InvalidId:
         abort(500, description="Invalid ObjectID")
-
-@app.errorhandler(400)
-def bad_request(e):
-    return jsonify(error=str(e)), 400
-
-@app.errorhandler(404)
-def resource_not_found(e):
-    return jsonify(error=str(e)), 404
-
-@app.errorhandler(500)
-def internal_system_error(e):
-    return jsonify(error=str(e)), 500
