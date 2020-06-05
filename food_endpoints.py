@@ -13,12 +13,24 @@ foods_collection = db['foods']
 @app.route('/foods', methods=['GET'])
 def get_foods():
     try:
+        category = request.args.get('category')
+        name = request.args.get('name')
+        results = None
+        if name:
+            results = foods_collection.find({'name': {'$regex': name}})
+        elif category:
+            results = foods_collection.find({'category': category})
+        else:
+            results = foods_collection.find()
+
         foods = list()
-        for q in foods_collection.find():
+        for q in results:
             foods.append({'_id': str(q['_id']), 'name': q['name'], 'calories': q['calories']})
+
         return jsonify(foods=foods)
     except Exception as e:
         abort(500, description=str(e))
+        
 
 @app.route('/foods/<id>', methods=['GET'])
 def get_food_by_id(id):
@@ -36,6 +48,7 @@ def create_food():
     food = request.json
     errors = create_food_schema.validate(food)
     errors_str = return_errors_str(errors)
+    print(food)
     if errors:
         abort(400, description=errors_str)
     foods_collection.insert_one(food)
