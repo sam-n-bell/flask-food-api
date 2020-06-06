@@ -6,6 +6,11 @@ class CreateFoodInputSchema(Schema):
     calories = fields.Int(required=True, validate=Range(min=0))
     category = fields.Str(required=True, validate=Length(min=1, max=15))
 
+class LoginSchema(Schema):
+    jwt = fields.Str(required=False)
+    email = fields.Str(required=True, validate=Length(min=1, max=30))
+    password = fields.Str(required=True, validate=Length(min=1, max=30))
+
 
 def return_errors_str(errors):
     errors_str = ''

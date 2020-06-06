@@ -25,6 +25,7 @@ def internal_system_error(e):
     return jsonify(error=str(e)), 500
 
 import food_endpoints
+import auth_endpoints
 
 if __name__ == '__main__':
     app.run(debug=True)
