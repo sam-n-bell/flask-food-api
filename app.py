@@ -16,6 +16,10 @@ app = Flask(__name__)
 def bad_request(e):
     return jsonify(error=str(e)), 400
 
+@app.errorhandler(401)
+def unauthorized(e):
+    return jsonify(error=str(e)), 401
+
 @app.errorhandler(404)
 def resource_not_found(e):
     return jsonify(error=str(e)), 404

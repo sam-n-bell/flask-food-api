@@ -48,7 +48,6 @@ def create_food():
     food = request.json
     errors = create_food_schema.validate(food)
     errors_str = return_errors_str(errors)
-    print(food)
     if errors:
         abort(400, description=errors_str)
     foods_collection.insert_one(food)
